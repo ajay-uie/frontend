@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private pages
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /api/
+Disallow: /checkout
+Disallow: /cart
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /products
+Allow: /about
+Allow: /contact
+Allow: /faq
+
+# Sitemap location
+Sitemap: https://fragransia.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
