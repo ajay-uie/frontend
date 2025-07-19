@@ -66,8 +66,8 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
 
       if (response.ok) {
         const data = await response.json();
-        if (data.success && data.admin) {
-          setAdmin(data.admin);
+        if (data.success && data.data.admin) {
+          setAdmin(data.data.admin);
           setToken(tokenToVerify);
         } else {
           // Token is invalid
@@ -106,11 +106,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        // Assuming the backend returns admin details and token upon successful login
-        // even if it's a general login endpoint.
-        setAdmin(data.admin);
-        setToken(data.token);
-        localStorage.setItem("admin_token", data.token);
+        // Updated to handle the new standardized response format
+        setAdmin(data.data.admin);
+        setToken(data.data.token);
+        localStorage.setItem("admin_token", data.data.token);
       } else {
         throw new Error(data.message || "Login failed");
       }

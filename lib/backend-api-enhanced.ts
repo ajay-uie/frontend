@@ -265,8 +265,8 @@ class BackendApiClient {
   }
 
   async loginWithFirebaseToken(idToken: string): Promise<ApiResponse<AuthResponse>> {
-    console.log('🔐 Attempting Firebase token login')
-    const response = await this.request<AuthResponse>('/auth/login', {
+    console.log("🔐 Attempting Firebase token login")
+    const response = await this.request<AuthResponse>("/auth/login-token", {
       method: 'POST',
       body: JSON.stringify({ idToken }),
     })
