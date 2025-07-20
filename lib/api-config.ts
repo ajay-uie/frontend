@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://backend-8npy.onrender.com/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-8npy.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -46,8 +46,8 @@ export const API_ENDPOINTS = {
     public: '/coupons/public',
   },
   users: {
-    profile: '/user/profile',
-    addresses: '/user/addresses',
+    profile: '/users/profile',
+    addresses: '/users/addresses',
   },
   admin: {
     dashboard: '/admin/dashboard',
