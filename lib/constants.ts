@@ -25,167 +25,167 @@ export const SOCKET_BASE = API_BASE.replace('/api', '')
 
 export const API_ENDPOINTS = {
   // Health & System
-  HEALTH: '/api/health',
+  HEALTH: '/health',
 
   // Authentication
   AUTH: {
-    LOGIN: '/api/auth/login',
-    REGISTER: '/api/auth/register',
-    LOGOUT: '/api/auth/logout',
-    REFRESH: '/api/auth/refresh',
-    VERIFY_EMAIL: '/api/auth/verify-email',
-    FORGOT_PASSWORD: '/api/auth/forgot-password',
-    RESET_PASSWORD: '/api/auth/reset-password',
-    PROFILE: '/api/auth/profile',
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    LOGOUT: '/auth/logout',
+    REFRESH: '/auth/refresh',
+    VERIFY_EMAIL: '/auth/verify-email',
+    FORGOT_PASSWORD: '/auth/forgot-password',
+    RESET_PASSWORD: '/auth/reset-password',
+    PROFILE: '/auth/profile',
   },
 
   // Enhanced Authentication
   AUTH_ENHANCED: {
-    SOCIAL_LOGIN: '/api/auth-enhanced/social',
-    TWO_FACTOR: '/api/auth-enhanced/2fa',
-    VERIFY_2FA: '/api/auth-enhanced/verify-2fa',
+    SOCIAL_LOGIN: '/auth-enhanced/social',
+    TWO_FACTOR: '/auth-enhanced/2fa',
+    VERIFY_2FA: '/auth-enhanced/verify-2fa',
   },
 
   // Admin Authentication
   ADMIN_AUTH: {
-    LOGIN: '/api/admin/auth/login',
-    LOGOUT: '/api/admin/auth/logout',
-    VERIFY_TOKEN: '/api/admin/auth/verify',
+    LOGIN: '/admin/auth/login',
+    LOGOUT: '/admin/auth/logout',
+    VERIFY_TOKEN: '/admin/auth/verify',
   },
 
   // Users
   USERS: {
-    PROFILE: '/api/users/profile',
-    ADDRESSES: '/api/users/addresses',
-    ADDRESS_DETAIL: (id: string) => `/api/users/addresses/${id}`,
-    UPDATE_PROFILE: '/api/users/profile',
-    CHANGE_PASSWORD: '/api/users/change-password',
-    DELETE_ACCOUNT: '/api/users/delete-account',
+    PROFILE: '/users/profile',
+    ADDRESSES: '/users/addresses',
+    ADDRESS_DETAIL: (id: string) => `/users/addresses/${id}`,
+    UPDATE_PROFILE: '/users/profile',
+    CHANGE_PASSWORD: '/users/change-password',
+    DELETE_ACCOUNT: '/users/delete-account',
   },
 
   // Products
   PRODUCTS: {
-    LIST: '/api/products',
-    SEARCH: '/api/products/search',
-    CATEGORIES: '/api/products/categories',
-    FEATURED: '/api/products/featured',
-    DETAIL: (id: string) => `/api/products/${id}`,
-    RELATED: (id: string) => `/api/products/${id}/related`,
-    REVIEWS: (id: string) => `/api/products/${id}/reviews`,
+    LIST: '/products',
+    SEARCH: '/products/search',
+    CATEGORIES: '/products/categories',
+    FEATURED: '/products/featured',
+    DETAIL: (id: string) => `/products/${id}`,
+    RELATED: (id: string) => `/products/${id}/related`,
+    REVIEWS: (id: string) => `/products/${id}/reviews`,
   },
 
   // Admin Products
   ADMIN_PRODUCTS: {
-    LIST: '/api/admin/products',
-    CREATE: '/api/admin/products',
-    UPDATE: (id: string) => `/api/admin/products/${id}`,
-    DELETE: (id: string) => `/api/admin/products/${id}`,
-    BULK_UPDATE: '/api/admin/products/bulk',
-    UPLOAD_IMAGE: '/api/admin/products/upload-image',
+    LIST: '/admin/products',
+    CREATE: '/admin/products',
+    UPDATE: (id: string) => `/admin/products/${id}`,
+    DELETE: (id: string) => `/admin/products/${id}`,
+    BULK_UPDATE: '/admin/products/bulk',
+    UPLOAD_IMAGE: '/admin/products/upload-image',
   },
 
   // Shopping Cart
   CART: {
-    GET: '/api/cart',
-    ADD_ITEM: '/api/cart/add',
-    UPDATE_ITEM: '/api/cart/update',
-    REMOVE_ITEM: '/api/cart/remove',
-    CLEAR: '/api/cart/clear',
-    SYNC: '/api/cart/sync',
+    GET: '/cart',
+    ADD_ITEM: '/cart/add',
+    UPDATE_ITEM: '/cart/update',
+    REMOVE_ITEM: '/cart/remove',
+    CLEAR: '/cart/clear',
+    SYNC: '/cart/sync',
   },
 
   // Orders
   ORDERS: {
-    LIST: '/api/orders',
-    CREATE: '/api/orders/create',
-    DETAIL: (id: string) => `/api/orders/${id}`,
-    CANCEL: (id: string) => `/api/orders/${id}/cancel`,
-    TRACK: (id: string) => `/api/orders/${id}/track`,
-    HISTORY: '/api/orders/history',
+    LIST: '/orders',
+    CREATE: '/orders/create',
+    DETAIL: (id: string) => `/orders/${id}`,
+    CANCEL: (id: string) => `/orders/${id}/cancel`,
+    TRACK: (id: string) => `/orders/${id}/track`,
+    HISTORY: '/orders/history',
   },
 
   // Admin Orders
   ADMIN_ORDERS: {
-    LIST: '/api/admin/orders',
-    UPDATE_STATUS: (id: string) => `/api/admin/orders/${id}/status`,
-    DETAILS: (id: string) => `/api/admin/orders/${id}`,
+    LIST: '/admin/orders',
+    UPDATE_STATUS: (id: string) => `/admin/orders/${id}/status`,
+    DETAILS: (id: string) => `/admin/orders/${id}`,
   },
 
   // Payments
   PAYMENTS: {
-    CREATE_INTENT: '/api/payments/create-intent',
-    VERIFY: '/api/payments/verify',
-    REFUND: '/api/payments/refund',
-    PAYMENT_METHODS: '/api/payments/methods',
+    CREATE_INTENT: '/payments/create-intent',
+    VERIFY: '/payments/verify',
+    REFUND: 'payments/refund',
+    PAYMENT_METHODS: '/payments/methods',
   },
 
   // Payment API (separate endpoint structure)
   PAYMENTS_API: {
-    PROCESS: '/api/payments-api/process',
-    WEBHOOK: '/api/payments-api/webhook',
+    PROCESS: '/payments-api/process',
+    WEBHOOK: '/payments-api/webhook',
   },
 
   // Wishlist
   WISHLIST: {
-    GET: '/api/wishlist',
-    ADD: '/api/wishlist/add',
-    REMOVE: '/api/wishlist/remove',
-    CLEAR: '/api/wishlist/clear',
+    GET: '/wishlist',
+    ADD: '/wishlist/add',
+    REMOVE: '/wishlist/remove',
+    CLEAR: '/wishlist/clear',
   },
 
   // Reviews
   REVIEWS: {
-    LIST: (productId: string) => `/api/reviews/product/${productId}`,
-    CREATE: '/api/reviews',
-    UPDATE: (id: string) => `/api/reviews/${id}`,
-    DELETE: (id: string) => `/api/reviews/${id}`,
-    USER_REVIEWS: '/api/reviews/user',
+    LIST: (productId: string) => `/reviews/product/${productId}`,
+    CREATE: '/reviews',
+    UPDATE: (id: string) => `/reviews/${id}`,
+    DELETE: (id: string) => `/reviews/${id}`,
+    USER_REVIEWS: '/reviews/user',
   },
 
   // Coupons
   COUPONS: {
-    LIST: '/api/coupons',
-    APPLY: '/api/coupons/apply',
-    VALIDATE: '/api/coupons/validate',
-    USER_COUPONS: '/api/coupons/user',
+    LIST: '/coupons',
+    APPLY: '/coupons/apply',
+    VALIDATE: '/coupons/validate',
+    USER_COUPONS: '/coupons/user',
   },
 
   // Admin Coupons
   ADMIN_COUPONS: {
-    LIST: '/api/admin/coupons',
-    CREATE: '/api/admin/coupons',
-    UPDATE: (id: string) => `/api/admin/coupons/${id}`,
-    DELETE: (id: string) => `/api/admin/coupons/${id}`,
+    LIST: '/admin/coupons',
+    CREATE: '/admin/coupons',
+    UPDATE: (id: string) => `/admin/coupons/${id}`,
+    DELETE: (id: string) => `/admin/coupons/${id}`,
   },
 
   // Webhooks
   WEBHOOKS: {
-    STRIPE: '/api/webhooks/stripe',
-    PAYPAL: '/api/webhooks/paypal',
+    STRIPE: '/webhooks/stripe',
+    PAYPAL: '/webhooks/paypal',
   },
 
   // Admin Dashboard
   ADMIN: {
-    DASHBOARD: '/api/admin/dashboard',
-    ANALYTICS: '/api/admin/analytics',
-    USERS: '/api/admin/users',
-    SETTINGS: '/api/admin/settings',
+    DASHBOARD: '/admin/dashboard',
+    ANALYTICS: '/admin/analytics',
+    USERS: '/admin/users',
+    SETTINGS: '/admin/settings',
   },
 
   // Real-time endpoints
   REALTIME: {
-    HEALTH: '/api/realtime/health',
-    DASHBOARD_STATS: '/api/realtime/dashboard-stats',
-    WEBSITE_DATA: '/api/realtime/website-data',
-    CLIENTS_INFO: '/api/realtime/clients-info',
-    TRIGGER_UPDATE: '/api/realtime/trigger-update',
+    HEALTH: '/realtime/health',
+    DASHBOARD_STATS: '/realtime/dashboard-stats',
+    WEBSITE_DATA: '/realtime/website-data',
+    CLIENTS_INFO: '/realtime/clients-info',
+    TRIGGER_UPDATE: '/realtime/trigger-update',
   },
 
   // Test Data (development only)
   TEST_DATA: {
-    GENERATE_PRODUCTS: '/api/test-data/products',
-    GENERATE_ORDERS: '/api/test-data/orders',
-    RESET_DATA: '/api/test-data/reset',
+    GENERATE_PRODUCTS: '/test-data/products',
+    GENERATE_ORDERS: '/test-data/orders',
+    RESET_DATA: '/test-data/reset',
   },
 }
 
