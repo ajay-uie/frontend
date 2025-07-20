@@ -1,33 +1,23 @@
-// Enhanced Frontend API Configuration (api/config.ts)
+// 🌐 Enhanced Frontend API Configuration (api/config.ts)
 
-const IS_DEV = process.env.NODE_ENV === 'development'
-const IS_PROD = process.env.NODE_ENV === 'production'
+const IS_DEV = process.env.NODE_ENV === 'development';
+const IS_PROD = process.env.NODE_ENV === 'production';
 
-// API Base URL with fallback logic
+// ✅ API Base URL with fallback logic
 export const API_BASE = (() => {
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL
-  }
-  
-  if (process.env.NEXT_PUBLIC_BACKEND_URL) {
-    return process.env.NEXT_PUBLIC_BACKEND_URL
-  }
-  
-  if (IS_DEV) {
-    return 'http://localhost:10000'
-  }
-  
-  return 'https://backend-8npy.onrender.com'
-})()
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (process.env.NEXT_PUBLIC_BACKEND_URL) return process.env.NEXT_PUBLIC_BACKEND_URL;
+  if (IS_DEV) return 'http://localhost:10000';
+  return 'https://backend-8npy.onrender.com';
+})();
 
-// Socket.IO URL (separate from REST API)
-export const SOCKET_BASE = API_BASE.replace('/api', '')
+// ✅ Socket.IO URL (separate from REST API)
+export const SOCKET_BASE = API_BASE.replace('/api', '');
 
+// ✅ API Endpoints – All prefixed with `/api`
 export const API_ENDPOINTS = {
-  // Health & System
   HEALTH: '/api/health',
 
-  // Authentication
   AUTH: {
     LOGIN: '/api/auth/login',
     REGISTER: '/api/auth/register',
@@ -39,21 +29,18 @@ export const API_ENDPOINTS = {
     PROFILE: '/api/auth/profile',
   },
 
-  // Enhanced Authentication
   AUTH_ENHANCED: {
     SOCIAL_LOGIN: '/api/auth-enhanced/social',
     TWO_FACTOR: '/api/auth-enhanced/2fa',
     VERIFY_2FA: '/api/auth-enhanced/verify-2fa',
   },
 
-  // Admin Authentication
   ADMIN_AUTH: {
     LOGIN: '/api/admin/auth/login',
     LOGOUT: '/api/admin/auth/logout',
     VERIFY_TOKEN: '/api/admin/auth/verify',
   },
 
-  // Users
   USERS: {
     PROFILE: '/api/users/profile',
     ADDRESSES: '/api/users/addresses',
@@ -63,7 +50,6 @@ export const API_ENDPOINTS = {
     DELETE_ACCOUNT: '/api/users/delete-account',
   },
 
-  // Products
   PRODUCTS: {
     LIST: '/api/products',
     SEARCH: '/api/products/search',
@@ -74,7 +60,6 @@ export const API_ENDPOINTS = {
     REVIEWS: (id: string) => `/api/products/${id}/reviews`,
   },
 
-  // Admin Products
   ADMIN_PRODUCTS: {
     LIST: '/api/admin/products',
     CREATE: '/api/admin/products',
@@ -84,7 +69,6 @@ export const API_ENDPOINTS = {
     UPLOAD_IMAGE: '/api/admin/products/upload-image',
   },
 
-  // Shopping Cart
   CART: {
     GET: '/api/cart',
     ADD_ITEM: '/api/cart/add',
@@ -94,7 +78,6 @@ export const API_ENDPOINTS = {
     SYNC: '/api/cart/sync',
   },
 
-  // Orders
   ORDERS: {
     LIST: '/api/orders',
     CREATE: '/api/orders/create',
@@ -104,14 +87,12 @@ export const API_ENDPOINTS = {
     HISTORY: '/api/orders/history',
   },
 
-  // Admin Orders
   ADMIN_ORDERS: {
     LIST: '/api/admin/orders',
     UPDATE_STATUS: (id: string) => `/api/admin/orders/${id}/status`,
     DETAILS: (id: string) => `/api/admin/orders/${id}`,
   },
 
-  // Payments
   PAYMENTS: {
     CREATE_INTENT: '/api/payments/create-intent',
     VERIFY: '/api/payments/verify',
@@ -119,13 +100,11 @@ export const API_ENDPOINTS = {
     PAYMENT_METHODS: '/api/payments/methods',
   },
 
-  // Payment API (separate endpoint structure)
   PAYMENTS_API: {
     PROCESS: '/api/payments-api/process',
     WEBHOOK: '/api/payments-api/webhook',
   },
 
-  // Wishlist
   WISHLIST: {
     GET: '/api/wishlist',
     ADD: '/api/wishlist/add',
@@ -133,7 +112,6 @@ export const API_ENDPOINTS = {
     CLEAR: '/api/wishlist/clear',
   },
 
-  // Reviews
   REVIEWS: {
     LIST: (productId: string) => `/api/reviews/product/${productId}`,
     CREATE: '/api/reviews',
@@ -142,7 +120,6 @@ export const API_ENDPOINTS = {
     USER_REVIEWS: '/api/reviews/user',
   },
 
-  // Coupons
   COUPONS: {
     LIST: '/api/coupons',
     APPLY: '/api/coupons/apply',
@@ -150,7 +127,6 @@ export const API_ENDPOINTS = {
     USER_COUPONS: '/api/coupons/user',
   },
 
-  // Admin Coupons
   ADMIN_COUPONS: {
     LIST: '/api/admin/coupons',
     CREATE: '/api/admin/coupons',
@@ -158,13 +134,11 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/api/admin/coupons/${id}`,
   },
 
-  // Webhooks
   WEBHOOKS: {
     STRIPE: '/api/webhooks/stripe',
     PAYPAL: '/api/webhooks/paypal',
   },
 
-  // Admin Dashboard
   ADMIN: {
     DASHBOARD: '/api/admin/dashboard',
     ANALYTICS: '/api/admin/analytics',
@@ -172,7 +146,6 @@ export const API_ENDPOINTS = {
     SETTINGS: '/api/admin/settings',
   },
 
-  // Real-time endpoints
   REALTIME: {
     HEALTH: '/api/realtime/health',
     DASHBOARD_STATS: '/api/realtime/dashboard-stats',
@@ -181,44 +154,34 @@ export const API_ENDPOINTS = {
     TRIGGER_UPDATE: '/api/realtime/trigger-update',
   },
 
-  // Test Data (development only)
   TEST_DATA: {
     GENERATE_PRODUCTS: '/api/test-data/products',
     GENERATE_ORDERS: '/api/test-data/orders',
     RESET_DATA: '/api/test-data/reset',
   },
-}
+};
 
-// Utility functions
+// ✅ Utility: Construct full API URL
 export const getApiUrl = (endpoint: string): string => {
-  // Handle both absolute and relative endpoints
-  if (endpoint.startsWith('http')) {
-    return endpoint
-  }
-  
-  // Remove leading slash if present to avoid double slashes
-  const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint
-  
-  return `${API_BASE}/${cleanEndpoint}`
-}
+  if (endpoint.startsWith('http')) return endpoint;
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+  return `${API_BASE}/${cleanEndpoint}`;
+};
 
-export const getSocketUrl = (): string => {
-  return SOCKET_BASE
-}
+// ✅ Utility: Get socket URL
+export const getSocketUrl = (): string => SOCKET_BASE;
 
-// API request configuration
+// ✅ Config
 export const API_CONFIG = {
-  TIMEOUT: 30000, // 30 seconds
+  TIMEOUT: 30000,
   RETRY_ATTEMPTS: 3,
-  RETRY_DELAY: 1000, // 1 second
-  
-  // Request headers
+  RETRY_DELAY: 1000,
+
   DEFAULT_HEADERS: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
-  
-  // HTTP status codes
+
   STATUS_CODES: {
     OK: 200,
     CREATED: 201,
@@ -229,23 +192,20 @@ export const API_CONFIG = {
     NOT_FOUND: 404,
     INTERNAL_SERVER_ERROR: 500,
   },
-} as const
+} as const;
 
-// Environment checks
+// ✅ Environment Flags
 export const ENV_FLAGS = {
   IS_DEV,
   IS_PROD,
   IS_CLIENT: typeof window !== 'undefined',
   IS_SERVER: typeof window === 'undefined',
-} as const
+} as const;
 
-// API endpoint validation (development only)
+// ✅ Dev-only Console Logs
 if (IS_DEV && ENV_FLAGS.IS_CLIENT) {
-  console.log('🔗 API Base URL:', API_BASE)
-  console.log('🔌 Socket URL:', SOCKET_BASE)
-  
-  // Validate that required environment variables are set
-  if (!API_BASE) {
-    console.warn('⚠️ API_BASE is not configured properly')
-  }
+  console.log('🔗 API Base URL:', API_BASE);
+  console.log('🔌 Socket URL:', SOCKET_BASE);
+
+  if (!API_BASE) console.warn('⚠️ API_BASE is not configured properly');
 }
