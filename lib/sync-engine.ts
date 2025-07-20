@@ -27,7 +27,7 @@ class DataSyncEngine {
   private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true
   private isSyncing = false
   private syncInterval: NodeJS.Timeout | null = null
-  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://fragransia.onrender.com/api'
+  private baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://fragransia.onrender.com'
   private listeners: Array<(event: SyncEvent) => void> = []
 
   constructor() {
