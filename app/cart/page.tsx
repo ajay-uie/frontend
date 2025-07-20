@@ -76,7 +76,7 @@ export default function CartPage() {
   }
 
   try {
-    const response = await fetch("/api/coupons")
+    const response = await fetch("/coupons")
     const data = await response.json()
     const promoCodes: Record<string, number> = data.coupons.reduce((acc: Record<string, number>, coupon: any) => {
       acc[coupon.code.toUpperCase()] = coupon.discountValue

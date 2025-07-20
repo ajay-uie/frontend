@@ -26,7 +26,7 @@ const API_CACHE_PATTERNS = [
 
 // Mock API responses for offline mode
 const MOCK_RESPONSES = {
-  '/api/products': {
+  '/products': {
     success: true,
     data: {
       products: [
@@ -68,7 +68,7 @@ const MOCK_RESPONSES = {
       total: 8
     }
   },
-  '/api/health-check': {
+  '/health-check': {
     success: true,
     status: 'offline-mode',
     message: 'Service worker providing offline functionality'
@@ -403,9 +403,9 @@ function getMockResponse(pathname) {
   }
   
   // Pattern matching
-  if (pathname.startsWith('/api/products/')) {
+  if (pathname.startsWith('/products/')) {
     const productId = pathname.split('/').pop()
-    const product = MOCK_RESPONSES['/api/products'].data.products.find(p => p.id === productId)
+    const product = MOCK_RESPONSES['/products'].data.products.find(p => p.id === productId)
     
     if (product) {
       return { success: true, data: product }

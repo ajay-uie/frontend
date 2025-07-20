@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   }
 
   // API routes protection
-  if (pathname.startsWith("/api/admin")) {
+  if (pathname.startsWith("/admin")) {
     // Verify admin token for API routes
     const authHeader = request.headers.get("authorization")
     if (!authHeader?.startsWith("Bearer ")) {
@@ -24,5 +24,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*"],
 }
