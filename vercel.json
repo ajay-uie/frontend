@@ -5,6 +5,17 @@
   "installCommand": "npm install",
   "devCommand": "npm run dev",
   "regions": ["iad1"],
+  "functions": {
+    "app/**/*.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://backend-8npy.onrender.com/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -20,8 +31,38 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization, X-Requested-With"
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://backend-8npy.onrender.com",
+    "NEXT_PUBLIC_BACKEND_URL": "https://backend-8npy.onrender.com"
+  }
 }
+

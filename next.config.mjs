@@ -1,15 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "https://backend-8npy.onrender.com/api",
-    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://backend-8npy.onrender.com/api",
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "https://backend-8npy.onrender.com",
+    NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || "https://backend-8npy.onrender.com",
   },
   images: {
-    domains: ['localhost', 'backend-8npy.onrender.com'],
+    domains: ['localhost', 'backend-8npy.onrender.com', 'fragransia-backend.onrender.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'backend-8npy.onrender.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fragransia-backend.onrender.com',
         port: '',
         pathname: '/**',
       },
@@ -62,8 +68,21 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY'
           }
         ],
+      },
+    ]
+  },
+  // API rewrites for backend communication
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://backend-8npy.onrender.com'}/:path*`,
       },
     ]
   },
