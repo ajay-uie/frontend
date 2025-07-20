@@ -1,3 +1,5 @@
+import { API_ENDPOINTS } from './api-config';
+
 interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
@@ -182,7 +184,7 @@ class BackendApiClient {
   // Auth Endpoints
   async register(userData: any): Promise<ApiResponse<AuthResponse>> {
     console.log("👤 Attempting user registration")
-    const response = await this.request<AuthResponse>("/auth/register", {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.register, {
       method: "POST",
       body: JSON.stringify(userData),
     })
@@ -197,7 +199,7 @@ class BackendApiClient {
 
   async login(credentials: any): Promise<ApiResponse<AuthResponse>> {
     console.log("🔐 Attempting user login")
-    const response = await this.request<AuthResponse>("/auth/login", {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.login, {
       method: "POST",
       body: JSON.stringify(credentials),
     })
@@ -212,7 +214,7 @@ class BackendApiClient {
 
   async verifyToken(): Promise<ApiResponse<{ user: User }>> {
     console.log("🔍 Verifying auth token")
-    return this.request<{ user: User }>("/auth/verify", {
+    return this.request<{ user: User }>(API_ENDPOINTS.auth.verify, {
       method: "POST",
     })
   }
@@ -233,18 +235,18 @@ class BackendApiClient {
     if (filters?.limit) params.append("limit", filters.limit.toString())
 
     const queryString = params.toString()
-    return this.request(`/products${queryString ? `?${queryString}` : ""}`)
+    return this.request(`${API_ENDPOINTS.products.list}${queryString ? `?${queryString}` : ""}`)
   }
 
   async getProductById(id: string): Promise<ApiResponse<Product>> {
     console.log("🛍️ Fetching product:", id)
-    return this.request<Product>(`/products/${id}`)
+    return this.request<Product>(API_ENDPOINTS.products.detail(id))
   }
 
   // Admin Product Endpoints
   async createProduct(productData: Omit<Product, "id" | "createdAt" | "updatedAt">): Promise<ApiResponse<Product>> {
     console.log("🛍️ Creating product")
-    return this.request<Product>("/admin/products", {
+    return this.request<Product>(API_ENDPOINTS.products.create, {
       method: "POST",
       body: JSON.stringify(productData),
     })
@@ -252,18 +254,16 @@ class BackendApiClient {
 
   async updateProduct(id: string, productData: Omit<Product, "id" | "createdAt" | "updatedAt">): Promise<ApiResponse<Product>> {
     console.log("🛍️ Updating product:", id)
-    return this.request<Product>(`/admin/products/${id}`, {
+    return this.request<Product>(API_ENDPOINTS.products.update(id), {
       method: "PUT",
       body: JSON.stringify(productData),
-      requireAuth: true,
     })
   }
 
   async deleteProduct(id: string): Promise<ApiResponse<any>> {
     console.log("🗑️ Deleting product:", id)
-    return this.request(`/admin/products/${id}`, {
+    return this.request(API_ENDPOINTS.products.delete(id), {
       method: "DELETE",
-      requireAuth: true,
     })
   }
 
@@ -281,37 +281,35 @@ class BackendApiClient {
     total: number
   }): Promise<ApiResponse<Order>> {
     console.log("📦 Creating order")
-    return this.request<Order>("/orders/create", {
+    return this.request<Order>(API_ENDPOINTS.orders.create, {
       method: "POST",
       body: JSON.stringify(orderData),
-      requireAuth: true,
     })
   }
 
   async getOrders(): Promise<ApiResponse<Order[]>> {
     console.log("📦 Fetching user orders")
-    return this.request<Order[]>("/orders/user", { requireAuth: true })
+    return this.request<Order[]>(API_ENDPOINTS.orders.userOrders)
   }
 
   async getOrderById(id: string): Promise<ApiResponse<Order>> {
     console.log("📦 Fetching order:", id)
-    return this.request<Order>(`/orders/${id}`, { requireAuth: true })
+    return this.request<Order>(API_ENDPOINTS.orders.detail(id))
   }
 
   // Admin Order Endpoints
   async updateOrderStatus(id: string, status: string): Promise<ApiResponse<Order>> {
     console.log("📦 Updating order status for:", id, "to", status)
-    return this.request<Order>(`/admin/orders/${id}/status`, {
+    return this.request<Order>(API_ENDPOINTS.orders.updateStatus(id), {
       method: "PUT",
       body: JSON.stringify({ status }),
-      requireAuth: true,
     })
   }
 
   // Countdown Settings
   async getCountdownSettings(): Promise<ApiResponse<any>> {
     console.log("⏰ Fetching countdown settings")
-    return this.request("/admin/countdown-settings", { requireAuth: true })
+    return this.request(API_ENDPOINTS.admin.countdownSettings)
   }
 }
 

@@ -1,5 +1,4 @@
-// Enhanced Backend API Client for Fragransia™ Frontend
-// Connects to the fragransia-main backend for authentication and data
+import { API_ENDPOINTS } from './api-config';
 
 interface ApiResponse<T = any> {
   success: boolean
@@ -205,7 +204,7 @@ class BackendApiClient {
 
   // Health check
   async healthCheck(): Promise<ApiResponse> {
-    return this.request('/health')
+    return this.request(API_ENDPOINTS.health)
   }
 
   // Authentication Methods
@@ -218,7 +217,7 @@ class BackendApiClient {
     phoneNumber?: string
   }): Promise<ApiResponse<AuthResponse>> {
     console.log('👤 Attempting user registration')
-    const response = await this.request<AuthResponse>('/auth/register', {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.register, {
       method: 'POST',
       body: JSON.stringify(userData),
     })
@@ -236,7 +235,7 @@ class BackendApiClient {
     password: string
   }): Promise<ApiResponse<AuthResponse>> {
     console.log('🔐 Attempting user login')
-    const response = await this.request<AuthResponse>('/auth/login', {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.login, {
       method: 'POST',
       body: JSON.stringify(credentials),
     })
@@ -251,7 +250,7 @@ class BackendApiClient {
 
   async googleLogin(idToken: string): Promise<ApiResponse<AuthResponse>> {
     console.log('🔐 Attempting Google login')
-    const response = await this.request<AuthResponse>('/auth/google-login', {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.googleLogin, {
       method: 'POST',
       body: JSON.stringify({ idToken }),
     })
@@ -266,7 +265,7 @@ class BackendApiClient {
 
   async loginWithFirebaseToken(idToken: string): Promise<ApiResponse<AuthResponse>> {
     console.log("🔐 Attempting Firebase token login")
-    const response = await this.request<AuthResponse>("/auth/login-token", {
+    const response = await this.request<AuthResponse>(API_ENDPOINTS.auth.loginToken, {
       method: 'POST',
       body: JSON.stringify({ idToken }),
     })
@@ -281,14 +280,14 @@ class BackendApiClient {
 
   async verifyToken(): Promise<ApiResponse<{ user: User }>> {
     console.log('🔍 Verifying auth token')
-    return this.request<{ user: User }>('/auth/verify', {
+    return this.request<{ user: User }>(API_ENDPOINTS.auth.verify, {
       method: 'POST',
     })
   }
 
   async logout(): Promise<ApiResponse> {
     console.log('👋 Logging out user')
-    const response = await this.request('/auth/logout', {
+    const response = await this.request(API_ENDPOINTS.auth.logout, {
       method: 'POST',
     })
     
@@ -298,7 +297,7 @@ class BackendApiClient {
 
   async forgotPassword(email: string): Promise<ApiResponse> {
     console.log('🔑 Requesting password reset')
-    return this.request('/auth/forgot-password', {
+    return this.request(API_ENDPOINTS.auth.forgotPassword, {
       method: 'POST',
       body: JSON.stringify({ email }),
     })
@@ -306,7 +305,7 @@ class BackendApiClient {
 
   async updateUserProfile(updates: Partial<User>): Promise<ApiResponse<User>> {
     console.log('👤 Updating user profile')
-    return this.request<User>('/user/profile', {
+    return this.request<User>(API_ENDPOINTS.users.profile, {
       method: 'PUT',
       body: JSON.stringify(updates),
     })
@@ -314,7 +313,7 @@ class BackendApiClient {
 
   async getUserAddresses(): Promise<ApiResponse<Address[]>> {
     console.log('🏠 Fetching user addresses')
-    return this.request<Address[]>('/user/addresses')
+    return this.request<Address[]>(API_ENDPOINTS.users.addresses)
   }
 
   // Product Methods
@@ -334,17 +333,17 @@ class BackendApiClient {
     if (filters?.limit) params.append('limit', filters.limit.toString())
 
     const queryString = params.toString()
-    return this.request(`/products${queryString ? `?${queryString}` : ''}`)
+    return this.request(`${API_ENDPOINTS.products.list}${queryString ? `?${queryString}` : ''}`)
   }
 
   async getProduct(productId: string): Promise<ApiResponse<Product>> {
     console.log('🛍️ Fetching product:', productId)
-    return this.request<Product>(`/products/${productId}`)
+    return this.request<Product>(API_ENDPOINTS.products.detail(productId))
   }
 
   async createProduct(productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>): Promise<ApiResponse<Product>> {
     console.log('🛍️ Creating product')
-    return this.request<Product>('/products', {
+    return this.request<Product>(API_ENDPOINTS.products.create, {
       method: 'POST',
       body: JSON.stringify(productData),
     })
@@ -365,7 +364,7 @@ class BackendApiClient {
     total: number
   }): Promise<ApiResponse<Order>> {
     console.log('📦 Creating order')
-    return this.request<Order>('/orders/create', {
+    return this.request<Order>(API_ENDPOINTS.orders.create, {
       method: 'POST',
       body: JSON.stringify(orderData),
     })
@@ -373,12 +372,12 @@ class BackendApiClient {
 
   async getOrder(orderId: string): Promise<ApiResponse<Order>> {
     console.log('📦 Fetching order:', orderId)
-    return this.request<Order>(`/orders/${orderId}`)
+    return this.request<Order>(API_ENDPOINTS.orders.detail(orderId))
   }
 
   async getUserOrders(): Promise<ApiResponse<Order[]>> {
     console.log('📦 Fetching user orders')
-    return this.request<Order[]>('/orders/user')
+    return this.request<Order[]>(API_ENDPOINTS.orders.userOrders)
   }
 
   // Payment Methods
@@ -391,7 +390,7 @@ class BackendApiClient {
     method: string
   }): Promise<ApiResponse<{ verified: boolean }>> {
     console.log('💳 Verifying payment')
-    return this.request<{ verified: boolean }>('/payments/verify', {
+    return this.request<{ verified: boolean }>(API_ENDPOINTS.payments.verify, {
       method: 'POST',
       body: JSON.stringify(paymentData),
     })
@@ -399,7 +398,7 @@ class BackendApiClient {
 
   async applyCoupon(code: string): Promise<ApiResponse<{ discount: number; type: string }>> {
     console.log('🎫 Applying coupon:', code)
-    return this.request<{ discount: number; type: string }>('/coupons/apply', {
+    return this.request<{ discount: number; type: string }>(API_ENDPOINTS.coupons.apply, {
       method: 'POST',
       body: JSON.stringify({ code }),
     })
@@ -407,19 +406,19 @@ class BackendApiClient {
 
   async getPublicCoupons(): Promise<ApiResponse<any[]>> {
     console.log("🎫 Fetching public coupons")
-    return this.request<any[]>("/coupons/public")
+    return this.request<any[]>(API_ENDPOINTS.coupons.public)
   }
 
   async getCountdownSettings(): Promise<ApiResponse<any>> {
     console.log("⏰ Fetching countdown settings")
-    return this.request<any>("/countdown/active")
+    return this.request<any>(API_ENDPOINTS.admin.countdownSettings)
   }
 
   // Admin Methods
 
   async getAdminDashboard(): Promise<ApiResponse<any>> {
     console.log('👑 Fetching admin dashboard')
-    return this.request('/admin/dashboard')
+    return this.request(API_ENDPOINTS.admin.dashboard)
   }
 
   // Debug method
@@ -452,4 +451,5 @@ if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
 }
 
 export type { User, Product, Order, ApiResponse, AuthResponse, Address }
+
 

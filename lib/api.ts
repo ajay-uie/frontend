@@ -1,4 +1,5 @@
-import { API_BASE, API_ENDPOINTS } from './constants'
+import { API_ENDPOINTS } from './api-config';
+import api from './api-config';
 
 export interface Product {
   id: string;
@@ -77,153 +78,97 @@ export interface Coupon {
 
 // API client configuration
 const apiClient = {
-  baseURL: API_BASE,
-  
-  async request(endpoint: string, options: RequestInit = {}) {
-    const url = `${this.baseURL}${endpoint}`
-    
-    const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    }
-
-    try {
-      const response = await fetch(url, config)
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      
-      return await response.json()
-    } catch (error) {
-      console.error('API request failed:', error)
-      throw error
-    }
-  },
-
-  // GET request
-  async get(endpoint: string, options: RequestInit = {}) {
-    return this.request(endpoint, { ...options, method: 'GET' })
-  },
-
-  // POST request
-  async post(endpoint: string, data?: any, options: RequestInit = {}) {
-    return this.request(endpoint, {
-      ...options,
-      method: 'POST',
-      body: data ? JSON.stringify(data) : undefined,
-    })
-  },
-
-  // PUT request
-  async put(endpoint: string, data?: any, options: RequestInit = {}) {
-    return this.request(endpoint, {
-      ...options,
-      method: 'PUT',
-      body: data ? JSON.stringify(data) : undefined,
-    })
-  },
-
-  // DELETE request
-  async delete(endpoint: string, options: RequestInit = {}) {
-    return this.request(endpoint, { ...options, method: 'DELETE' })
-  },
-}
-
-// API functions
-export const api = {
   // Health check
   async checkHealth() {
-    return apiClient.get(API_ENDPOINTS.HEALTH)
+    return api.get(API_ENDPOINTS.health);
   },
 
   // Authentication
   auth: {
     async register(userData: any) {
-      return apiClient.post(API_ENDPOINTS.AUTH.REGISTER, userData)
+      return api.post(API_ENDPOINTS.auth.register, userData);
     },
     
     async login(credentials: any) {
-      return apiClient.post(API_ENDPOINTS.AUTH.LOGIN, credentials)
+      return api.post(API_ENDPOINTS.auth.login, credentials);
     },
     
     async adminLogin(credentials: any) {
-      return apiClient.post(API_ENDPOINTS.AUTH.ADMIN_LOGIN, credentials)
+      return api.post(API_ENDPOINTS.auth.adminLogin, credentials);
     },
   },
 
   // Products
   products: {
     async getAll() {
-      return apiClient.get(API_ENDPOINTS.PRODUCTS.LIST)
+      return api.get(API_ENDPOINTS.products.list);
     },
     
     async getById(id: string) {
-      return apiClient.get(`${API_ENDPOINTS.PRODUCTS.DETAIL}/${id}`)
+      return api.get(API_ENDPOINTS.products.detail(id));
     },
     
     async create(productData: any) {
-      return apiClient.post(API_ENDPOINTS.PRODUCTS.ADMIN_CREATE, productData)
+      return api.post(API_ENDPOINTS.products.create, productData);
     },
     
     async update(id: string, productData: any) {
-      return apiClient.put(`${API_ENDPOINTS.PRODUCTS.ADMIN_UPDATE}/${id}`, productData)
+      return api.put(API_ENDPOINTS.products.update(id), productData);
     },
     
     async delete(id: string) {
-      return apiClient.delete(`${API_ENDPOINTS.PRODUCTS.ADMIN_DELETE}/${id}`)
+      return api.delete(API_ENDPOINTS.products.delete(id));
     },
   },
 
   // Orders
   orders: {
     async create(orderData: any) {
-      return apiClient.post(API_ENDPOINTS.ORDERS.CREATE, orderData)
+      return api.post(API_ENDPOINTS.orders.create, orderData);
     },
     
     async getById(id: string) {
-      return apiClient.get(`${API_ENDPOINTS.ORDERS.DETAIL}/${id}`)
+      return api.get(API_ENDPOINTS.orders.detail(id));
     },
   },
 
   // Payments
   payments: {
     async process(paymentData: any) {
-      return apiClient.post(API_ENDPOINTS.PAYMENTS.PROCESS, paymentData);
+      return api.post(API_ENDPOINTS.payments.verify, paymentData);
     },
   },
 
   // Coupons
   coupons: {
     async getAll(userId: string) {
-      return apiClient.get(`${API_ENDPOINTS.COUPONS.LIST}?userId=${userId}`);
+      return api.get(`${API_ENDPOINTS.coupons.list}?userId=${userId}`);
     },
     async apply(code: string, total: number) {
-      return apiClient.post(API_ENDPOINTS.COUPONS.APPLY, { code, total });
+      return api.post(API_ENDPOINTS.coupons.apply, { code, total });
     },
   },
 
   // Users
   users: {
     async getAddresses(userId: string) {
-      return apiClient.get(`${API_ENDPOINTS.USERS.ADDRESSES}?userId=${userId}`);
+      return api.get(`${API_ENDPOINTS.users.addresses}?userId=${userId}`);
     },
   },
 
   // Shipping
   shipping: {
     async getOptions(pincode: string, weight: number) {
-      return apiClient.get(`${API_ENDPOINTS.SHIPPING.OPTIONS}?pincode=${pincode}&weight=${weight}`);
+      // This endpoint is not in the provided API_ENDPOINTS, assuming it's a direct call to Shiprocket or similar
+      // For now, leaving it as is, but ideally it should be part of API_ENDPOINTS if it's a backend API
+      return api.get(`/api/shipping/options?pincode=${pincode}&weight=${weight}`);
     },
   },
 
   // Admin
   admin: {
     async getDashboard() {
-      return apiClient.get(API_ENDPOINTS.ADMIN.DASHBOARD)
+      return api.get(API_ENDPOINTS.admin.dashboard);
     },
   },
 }
@@ -231,12 +176,14 @@ export const api = {
 // Health check function for compatibility
 export async function checkApiHealth() {
   try {
-    const response = await api.checkHealth()
-    return { success: true, data: response }
+    const response = await apiClient.checkHealth();
+    return { success: true, data: response };
   } catch (error) {
-    return { success: false, error }
+    return { success: false, error };
   }
 }
 
-export default api
-export { apiClient };
+export default apiClient;
+export { api as axiosClient };
+
+
