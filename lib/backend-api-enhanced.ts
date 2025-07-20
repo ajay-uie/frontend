@@ -94,7 +94,7 @@ class BackendApiClient {
     // Use environment variable first, then fallback to development/production URLs
     this.baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 
                    (process.env.NODE_ENV === 'development' 
-                     ? 'http://localhost:5000/api' 
+                     ? 'https://backend-8npy.onrender.com/api' 
                      : 'https://backend-8npy.onrender.com/api')
     
     console.log('🔧 Backend API initialized with URL:', this.baseUrl)

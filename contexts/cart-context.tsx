@@ -193,7 +193,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const { user, token } = useAuth()
 
   // API base URL
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-8npy.onrender.com'
 
   // Load cart from backend when user is authenticated
   useEffect(() => {

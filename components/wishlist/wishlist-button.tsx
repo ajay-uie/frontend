@@ -35,7 +35,7 @@ export function WishlistButton({
   const [isLoading, setIsLoading] = useState(false)
   const { user, token } = useAuth()
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-8npy.onrender.com'
 
   // Check if product is in wishlist on mount
   useEffect(() => {

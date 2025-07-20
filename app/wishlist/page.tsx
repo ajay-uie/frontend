@@ -51,7 +51,7 @@ export default function WishlistPage() {
   const [removingItems, setRemovingItems] = useState<Set<string>>(new Set())
   const [movingToCart, setMovingToCart] = useState<Set<string>>(new Set())
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-8npy.onrender.com'
 
   useEffect(() => {
     if (!user) {

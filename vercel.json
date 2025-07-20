@@ -24,11 +24,6 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://backend-8npy.onrender.com/api/:path*"
-    }
-  ]
+
 }
 

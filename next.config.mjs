@@ -21,14 +21,6 @@ const nextConfig = {
       }
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://backend-8npy.onrender.com/api/:path*',
-      },
-    ]
-  },
   // Vercel optimizations
   experimental: {
     optimizeCss: true,

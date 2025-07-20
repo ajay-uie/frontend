@@ -200,7 +200,7 @@ class NewBackendApiClient {
 
   async registerWithToken(userData: any): Promise<ApiResponse<AuthResponse>> {
     console.log("👤 Attempting user registration with token")
-    const response = await this.request<AuthResponse>("/api/auth/register-token", {
+    const response = await this.request<AuthResponse>("/auth/register-token", {
       method: "POST",
       body: JSON.stringify(userData),
     })

@@ -107,7 +107,7 @@ export function SignalsPanel() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null)
   const [systemSignals, setSystemSignals] = useState<SystemSignals | null>(null)
 
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-8npy.onrender.com'
 
   useEffect(() => {
     loadAnalytics()

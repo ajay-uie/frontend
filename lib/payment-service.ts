@@ -58,7 +58,7 @@ class PaymentService {
     notes?: string;
   }, token: string): Promise<{ success: boolean; order?: any; error?: string }> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/orders/create`, {
+      const response = await fetch(`${this.apiBaseUrl}/orders/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ class PaymentService {
     orderId: string;
   }, token: string): Promise<{ success: boolean; error?: string }> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/api/payments/verify`, {
+      const response = await fetch(`${this.apiBaseUrl}/payments/verify`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
