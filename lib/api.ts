@@ -77,7 +77,7 @@ export interface Coupon {
 }
 
 // API client configuration
-const apiClient = {
+export const apiClient = {
   // Health check
   async checkHealth() {
     return api.get(API_ENDPOINTS.health);
@@ -159,8 +159,8 @@ const apiClient = {
   // Shipping
   shipping: {
     async getOptions(pincode: string, weight: number) {
-      // This endpoint is not in the provided API_ENDPOINTS, assuming it's a direct call to Shiprocket or similar
-      // For now, leaving it as is, but ideally it should be part of API_ENDPOINTS if it's a backend API
+      // This endpoint is not in the provided API_ENDPOINTS, assuming it\'s a direct call to Shiprocket or similar
+      // For now, leaving it as is, but ideally it should be part of API_ENDPOINTS if it\'s a backend API
       return api.get(`/api/shipping/options?pincode=${pincode}&weight=${weight}`);
     },
   },
@@ -184,6 +184,6 @@ export async function checkApiHealth() {
 }
 
 export default apiClient;
-export { api as axiosClient };
+export { api };
 
 
