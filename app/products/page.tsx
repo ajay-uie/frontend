@@ -52,8 +52,9 @@ export default function ProductsPage() {
 
       // Try API first
       try {
-       const response = await api.products.getAll();       if (response.success && response.products) {
-          setProducts(response.products)
+       const response = await api.products.getAll();
+       if (response.data && response.data.products) {
+          setProducts(response.data.products)
           return
         }
       } catch (error) {
